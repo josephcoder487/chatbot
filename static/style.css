@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        #aab9da,
+        #7e9cdc,
+        #7097EA,
+        #4169E1,
+        #3957D7,
+        #3044C5,
+        #2D39A0
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+
+.chat {
+    width: 400px;
+    margin: 80px auto;
+    background: #4169e1;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#box {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #8da5ed
+}
