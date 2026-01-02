@@ -10,38 +10,56 @@
     <h2 style="color: aliceblue;">AI Chatbot</h2>
     <div id="box"></div>
 
-    <input 
-    id="msg" 
-    placeholder="Type a message"
-    onkeydown="handleKey(event)">
+    <input id="msg" placeholder="Type a message" onkeydown="handleKey(event)">
     <button onclick="send()">Send</button>
 </div>
 
-
 <script>
 function send() {
-    let m = document.getElementById("msg").value;
+    let input = document.getElementById("msg");
+    let box = document.getElementById("box");
+    let btn = document.querySelector("button");
+
+    let m = input.value.trim();
+    if (m === "") return;
+
+    // show user message
+    box.innerHTML += "<p><b>You:</b> " + m + "</p>";
+    input.value = "";
+
+    // typing indicator
+    let typing = document.createElement("p");
+    typing.id = "typing";
+    typing.innerHTML = "<b>Bot:</b> typing...";
+    box.appendChild(typing);
+
+    btn.disabled = true;
 
     fetch("/chat", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({message: m})
+        body: JSON.stringify({ message: m })
     })
     .then(r => r.json())
     .then(d => {
-        document.getElementById("box").innerHTML +=
-            "<p><b>You:</b> " + m + "</p>" +
-            "<p><b>Bot:</b> " + d.reply + "</p>";
-        document.getElementById("msg").value = "";
+        document.getElementById("typing").remove();
+        box.innerHTML += "<p><b>Bot:</b> " + d.reply + "</p>";
+        box.scrollTop = box.scrollHeight;
+        btn.disabled = false;
+    })
+    .catch(() => {
+        document.getElementById("typing").remove();
+        box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
+        btn.disabled = false;
     });
 }
+
 function handleKey(event) {
     if (event.key === "Enter") {
-        event.preventDefault();   // stops page reload
-        send();                   // calls chatbot
+        event.preventDefault();
+        send();
     }
 }
-
 </script>
 
 </body>
