@@ -9,63 +9,71 @@
 <div class="chat">
     <h2 style="color: aliceblue; text-align: center;">MARVO</h2>
     <div id="box"></div>
-    <br>
-    <input id="msg" placeholder="   What's on your mind..." onkeydown="handleKey(event)">
-    <button onclick="send()" id="ask">Ask</button>
-    <button onclick="loginWithGoogle()" id="main">Sign in with Google</button>
+
+<input id="msg" onkeydown="handleKey(event)" placeholder="   what's on your mind...">
+<button id="ask" onclick="send()">Ask</button>
+<button onclick="loginWithGoogle()" id="main">Sign in with Google</button>
+
 </div>
 
 <script>
-function send() {
-    let input = document.getElementById("msg");
-    let box = document.getElementById("box");
-    let btn = document.querySelector("button");
-
-    let m = input.value.trim();
-    if (m === "") return;
-
-    // show user message
-    box.innerHTML += "<p><b>You:</b> " + m + "</p>";
-    input.value = "";
-
-    // typing indicator
-    let typing = document.createElement("p");
-    typing.id = "typing";
-    typing.innerHTML = "<b>Bot:</b> typing...";
-    box.appendChild(typing);
-
-    btn.disabled = true;
-
-    fetch("/chat", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ message: m })
-    })
-    .then(r => r.json())
-    .then(d => {
-        document.getElementById("typing").remove();
-        box.innerHTML += "<p><b>Bot:</b> " + d.reply + "</p>";
-        box.scrollTop = box.scrollHeight;
-        btn.disabled = false;
-    })
-    .catch(() => {
-        document.getElementById("typing").remove();
-        box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
-        btn.disabled = false;
-    });
-}
-
-function handleKey(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        send();
+    function send() {
+        const input = document.getElementById("msg");
+        const box = document.getElementById("box");
+        const btn = document.getElementById("ask");
+    
+        const message = input.value.trim();
+        if (!message) return;
+    
+        // show user message
+        box.innerHTML += `<p><b>You:</b> ${message}</p>`;
+        input.value = "";
+    
+        // typing indicator
+        const typing = document.createElement("p");
+        typing.id = "typing";
+        typing.innerHTML = "<b>Bot:</b> typing...";
+        box.appendChild(typing);
+    
+        btn.disabled = true;
+    
+        fetch("/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message: message })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Network error");
+            return res.json();
+        })
+        .then(data => {
+            typing.remove();
+            box.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
+            box.scrollTop = box.scrollHeight;
+            btn.disabled = false;
+        })
+        .catch(err => {
+            console.error(err);
+            typing.remove();
+            box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
+            btn.disabled = false;
+        });
     }
-}
-function loginWithGoogle() {
-    // open auth page in same tab
-    window.location.href = "/auth";
-}
-</script>
+    
+    function handleKey(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            send();
+        }
+    }
+    
+    function loginWithGoogle() {
+        window.location.href = "/auth";
+    }
+    </script>
+    
 
 </body>
 </html>
