@@ -22,7 +22,8 @@ body {
 
 
 .chat {
-    width: 400px;
+    width: 700px;
+    height: 520px;
     margin: 80px auto;
     background: #4169e1;
     padding: 20px;
@@ -30,10 +31,45 @@ body {
 }
 
 #box {
-    height: 250px;
+    height: 350px;
     overflow-y: auto;
     border: 1px solid #ccc;
     margin-bottom: 10px;
     padding: 10px;
     background: #8da5ed
+}
+#msg {
+    width: 80%;
+    height: 35px;
+    border-radius: 10px;
+}
+#ask {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background: #acafbd;
+    transition: transform 0.3s ease-in-out;
+    
+}
+#ask:hover {
+    background: #90949c;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+#main {
+    border-radius: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+    margin-left: 210px;
+    margin-top: 5px;
+    height: 30px;
+     /* smooth animation */
+     transition: transform 0.3s ease-in-out;
+}
+#main:hover {
+    transform: scale(1.1);
 }

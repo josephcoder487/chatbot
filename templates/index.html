@@ -7,11 +7,12 @@
 <body>
 
 <div class="chat">
-    <h2 style="color: aliceblue;">AI Chatbot</h2>
+    <h2 style="color: aliceblue; text-align: center;">MARVO</h2>
     <div id="box"></div>
-
-    <input id="msg" placeholder="Type a message" onkeydown="handleKey(event)">
-    <button onclick="send()">Send</button>
+    <br>
+    <input id="msg" placeholder="   What's on your mind..." onkeydown="handleKey(event)">
+    <button onclick="send()" id="ask">Ask</button>
+    <button onclick="loginWithGoogle()" id="main">Sign in with Google</button>
 </div>
 
 <script>
@@ -59,6 +60,10 @@ function handleKey(event) {
         event.preventDefault();
         send();
     }
+}
+function loginWithGoogle() {
+    // open auth page in same tab
+    window.location.href = "/auth";
 }
 </script>
 

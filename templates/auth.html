@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Account</title>
+    <style>
+        .gbox {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+<div class="gbox">
+<h2>Verify your account</h2>
+
+<!-- Google Sign-In -->
+<div id="g_id_onload"
+     data-client_id="YOUR_GOOGLE_CLIENT_ID"
+     data-callback="handleGoogleLogin">
+</div>
+
+<div class="g_id_signin"></div>
+
+<br>
+
+<!-- reCAPTCHA -->
+<div class="g-recaptcha" data-sitekey="YOUR_SITE_KEY"></div>
+
+<br>
+<button onclick="submitVerification()">Continue</button>
+</div>
+<script>
+let googleToken = null;
+
+function handleGoogleLogin(response) {
+    googleToken = response.credential;
+}
+
+function submitVerification() {
+    const captchaResponse = grecaptcha.getResponse();
+
+    if (!googleToken) {
+        alert("Please sign in with Google");
+        return;
+    }
+
+    if (!captchaResponse) {
+        alert("Please verify reCAPTCHA");
+        return;
+    }
+
+    fetch("/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            google_token: googleToken,
+            captcha_token: captchaResponse
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = "/chat"; // back to chatbot
+        } else {
+            alert("Verification failed");
+        }
+    });
+}
+</script>
+
+</body>
+</html>
