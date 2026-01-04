@@ -5,7 +5,9 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
+<div class="leftbar">
+    <div id="element"><p>hello</p></div>
+</div>
 <div class="chat">
     <h2 style="color: aliceblue; text-align: center;">MARVO</h2>
     <div id="box"></div>
@@ -55,12 +57,14 @@ function send() {
     });
 }
 
+//user defined function to handle enter key press
 function handleKey(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         send();
     }
 }
+
 function loginWithGoogle() {
     // open auth page in same tab
     window.location.href = "/auth";
