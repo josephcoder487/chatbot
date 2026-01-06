@@ -14,24 +14,22 @@ body {
         #3044C5,
         #2D39A0
     );
-    display: flex;
-    align-items: center;
-    justify-content: center;
     font-family: Arial, sans-serif;
 }
 
 
 .chat {
-    width: 700px;
-    height: 520px;
+    width: 1000px;
+    height: 620px;
     margin: 80px auto;
+    margin-left: 100px;
     background: #4169e1;
     padding: 20px;
     border-radius: 10px;
 }
 
 #box {
-    height: 350px;
+    height: 455px;
     overflow-y: auto;
     border: 1px solid #ccc;
     margin-bottom: 10px;
@@ -44,12 +42,12 @@ body {
     border-radius: 10px;
 }
 #ask {
-    width: 100px;
+    width: 150px;
     height: 40px;
     border-radius: 10px;
     background: #acafbd;
     transition: transform 0.3s ease-in-out;
-    
+    margin-left: 15px;
 }
 #ask:hover {
     background: #90949c;
@@ -64,7 +62,7 @@ body {
     padding-top: 5px;
     display: flex;
     justify-content: center;
-    margin-left: 210px;
+    margin-left: 350px;
     margin-top: 5px;
     height: 30px;
      /* smooth animation */
@@ -73,14 +71,100 @@ body {
 #main:hover {
     transform: scale(1.1);
 }
-#element {
-    height: 650px;
+.app {
+    display: flex;
+    height: 100vh;
+}
+.sidebar {
     width: 250px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
+    padding: 20px 10px;
+    display: flex;
+    padding-top: 80px;
+    flex-direction: column;
+
+    
+}
+
+
+.logo {
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
     border-radius: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
+}
+
+.nav {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.nav:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.nav.active {
+    background: rgba(255,255,255,0.3);
+}
+.app {
+    display: flex;
+    height: 100vh;
+}
+.account {
+    margin-top: auto;              /* pushes it to bottom */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.account-title {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 5px;
+    padding-left: 80px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.login-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
     padding: 10px;
-    background: #ffffff
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.google-btn {
+    background: white;
+    color: #444;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.google-btn:hover {
+    background: #eaeaea;
+}
+.v-line {
+    width: 1px;
+    height: 100vh;
+    background: rgba(255,255,255,0.35);
+    border: none;
+    margin: 0;
 }

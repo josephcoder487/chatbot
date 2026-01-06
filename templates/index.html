@@ -5,79 +5,23 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-<div class="leftbar">
-    <div id="element"><p>hello</p></div>
-</div>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">M A R V O - 3</div>
+            <button class="nav active">Home</button>
+            <button class="nav">Chats</button>
+            <button class="nav">History</button>
+            <button class="nav">Settings</button>
+            <div class="account">
+                <p class="account-title">Account</p>
+                <button class="login-btn">Log in</button>
+                <button class="google-btn" onclick="loginWithGoogle()">Sign in with Google</button>
+            </div>
+        </aside>
+        <hr class="v-line">
 <div class="chat">
-    <h2 style="color: aliceblue; text-align: center;">MARVO</h2>
+    <h2 style="color: aliceblue; text-align: center;">M  A  R  V  O</h2>
     <div id="box"></div>
-<<<<<<< HEAD
-
-<input id="msg" onkeydown="handleKey(event)" placeholder="   what's on your mind...">
-<button id="ask" onclick="send()">Ask</button>
-<button onclick="loginWithGoogle()" id="main">Sign in with Google</button>
-
-</div>
-
-<script>
-    function send() {
-        const input = document.getElementById("msg");
-        const box = document.getElementById("box");
-        const btn = document.getElementById("ask");
-    
-        const message = input.value.trim();
-        if (!message) return;
-    
-        // show user message
-        box.innerHTML += `<p><b>You:</b> ${message}</p>`;
-        input.value = "";
-    
-        // typing indicator
-        const typing = document.createElement("p");
-        typing.id = "typing";
-        typing.innerHTML = "<b>Bot:</b> typing...";
-        box.appendChild(typing);
-    
-        btn.disabled = true;
-    
-        fetch("/chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ message: message })
-        })
-        .then(res => {
-            if (!res.ok) throw new Error("Network error");
-            return res.json();
-        })
-        .then(data => {
-            typing.remove();
-            box.innerHTML += `<p><b>Bot:</b> ${data.reply}</p>`;
-            box.scrollTop = box.scrollHeight;
-            btn.disabled = false;
-        })
-        .catch(err => {
-            console.error(err);
-            typing.remove();
-            box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
-            btn.disabled = false;
-        });
-    }
-    
-    function handleKey(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            send();
-        }
-    }
-    
-    function loginWithGoogle() {
-        window.location.href = "/auth";
-    }
-    </script>
-    
-=======
     <br>
     <input id="msg" placeholder="   What's on your mind..." onkeydown="handleKey(event)">
     <button onclick="send()" id="ask">Ask.</button>
@@ -100,7 +44,7 @@ function send() {
     // typing indicator
     let typing = document.createElement("p");
     typing.id = "typing";
-    typing.innerHTML = "<b>Bot:</b> typing...";
+    typing.innerHTML = "<b>Marvo:</b> typing...";
     box.appendChild(typing);
 
     btn.disabled = true;
@@ -113,7 +57,7 @@ function send() {
     .then(r => r.json())
     .then(d => {
         document.getElementById("typing").remove();
-        box.innerHTML += "<p><b>Bot:</b> " + d.reply + "</p>";
+        box.innerHTML += "<p><b>Marvo:</b> " + d.reply + "</p>";
         box.scrollTop = box.scrollHeight;
         btn.disabled = false;
     })
@@ -137,7 +81,6 @@ function loginWithGoogle() {
     window.location.href = "/auth";
 }
 </script>
->>>>>>> fix-work
 
 </body>
 </html>
