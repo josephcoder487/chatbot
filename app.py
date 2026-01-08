@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, jsonify, redirect, session
 
 load_dotenv()
 
+#  ✅ INITIALIZE OPENAI CLIENT
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = Flask(__name__)
