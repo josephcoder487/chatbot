@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
-from google import genai
+import google.generativeai as genai
+
 
 # 1. Load your .env file
 load_dotenv()
