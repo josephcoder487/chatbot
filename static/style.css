@@ -3,88 +3,102 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+/* =========================
+   FLAME-LIKE ZONE BACKGROUND
+   ========================= */
 body {
     min-height: 100vh;
-    background: linear-gradient(
-        #aab9da,
-        #7e9cdc,
-        #7097EA,
-        #4169E1,
-        #3957D7,
-        #3044C5,
-        #2D39A0
-    );
     font-family: Arial, sans-serif;
+    position: relative;
+    overflow: hidden;
+
+    /* COLOR ZONES */
+    background:
+        radial-gradient(circle at 50% 45%, #f7b2c4 0%, transparent 55%), /* light center */
+        radial-gradient(circle at 90% 10%, #9f1f3a 0%, transparent 50%), /* dark top-right */
+        radial-gradient(circle at 10% 5%,  #c5284a 0%, transparent 55%), /* dark top-left */
+        radial-gradient(circle at 70% 85%, #e94b6a 0%, transparent 60%); /* warm bottom */
+
+    animation: flameBlend 8s linear infinite;
+}
+
+/* COLLAPSING / BREATHING FLAME MOTION */
+@keyframes microShake {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-0.3px, 0.4px); }
+    50%  { transform: translate(0.4px, -0.3px); }
+    75%  { transform: translate(-0.2px, -0.2px); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes flameBlend {
+    0% {
+        background-position:
+            50% 45%,
+            90% 10%,
+            10% 5%,
+            70% 85%;
+    }
+    100% {
+        background-position:
+            48% 52%,
+            86% 14%,
+            14% 8%,
+            66% 88%;
+    }
+}
+
+/* HEAT GLOW */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: inherit;
+    filter: blur(55px);
+    opacity: 0.5;
+    z-index: -1;
+
+    animation: microShake 1.8s linear infinite;
 }
 
 
-.chat {
-    width: 1000px;
-    height: 620px;
-    margin: 80px auto;
-    margin-left: 100px;
-    background: #4169e1;
-    padding: 20px;
-    border-radius: 10px;
+/* FLAME FLICKER */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(255,255,255,0.12),
+        transparent 60%
+    );
+    animation: flameFlicker 3s ease-in-out infinite alternate;
+    pointer-events: none;
 }
 
-#box {
-    height: 455px;
-    overflow-y: auto;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-    background: #8da5ed
-}
-#msg {
-    width: 80%;
-    height: 35px;
-    border-radius: 10px;
-}
-#ask {
-    width: 150px;
-    height: 40px;
-    border-radius: 10px;
-    background: #acafbd;
-    transition: transform 0.3s ease-in-out;
-    margin-left: 15px;
-}
-#ask:hover {
-    background: #90949c;
-    cursor: pointer;
-    transform: scale(1.1);
+@keyframes flameFlicker {
+    from { transform: translateY(-1.5%); }
+    to   { transform: translateY(1.5%); }
 }
 
-#main {
-    border-radius: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 5px;
-    display: flex;
-    justify-content: center;
-    margin-left: 350px;
-    margin-top: 5px;
-    height: 30px;
-     /* smooth animation */
-     transition: transform 0.3s ease-in-out;
-}
-#main:hover {
-    transform: scale(1.1);
-}
+/* =========================
+   APP LAYOUT
+   ========================= */
 .app {
     display: flex;
     height: 100vh;
 }
+
+/* =========================
+   SIDEBAR
+   ========================= */
 .sidebar {
     width: 250px;
-    padding: 20px 10px;
+    padding: 80px 10px 20px;
     display: flex;
-    padding-top: 80px;
     flex-direction: column;
-
-    
 }
-
 
 .logo {
     color: white;
@@ -92,7 +106,6 @@ body {
     font-weight: bold;
     text-align: center;
     margin-bottom: 40px;
-    border-radius: 10px;
 }
 
 .nav {
@@ -113,12 +126,12 @@ body {
 .nav.active {
     background: rgba(255,255,255,0.3);
 }
-.app {
-    display: flex;
-    height: 100vh;
-}
+
+/* =========================
+   ACCOUNT SECTION
+   ========================= */
 .account {
-    margin-top: auto;              /* pushes it to bottom */
+    margin-top: auto;
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.3);
     display: flex;
@@ -128,11 +141,9 @@ body {
 
 .account-title {
     color: white;
-    font-size: 16px;
-    margin-bottom: 5px;
-    padding-left: 80px;
     font-size: 17px;
     font-weight: bold;
+    text-align: center;
 }
 
 .login-btn {
@@ -161,10 +172,73 @@ body {
 .google-btn:hover {
     background: #eaeaea;
 }
+
+/* =========================
+   VERTICAL LINE
+   ========================= */
 .v-line {
     width: 1px;
     height: 100vh;
     background: rgba(255,255,255,0.35);
+}
+
+/* =========================
+   CHAT BOX
+   ========================= */
+.chat {
+    width: 1000px;
+    height: 620px;
+    margin: 80px auto;
+    background: #E14169;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#box {
+    height: 455px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #f2a3b8;
+}
+
+#msg {
+    width: 80%;
+    height: 35px;
+    border-radius: 10px;
     border: none;
-    margin: 0;
+    padding-left: 10px;
+}
+
+#ask {
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    background: #acafbd;
+    margin-left: 15px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+#ask:hover {
+    background: #90949c;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* =========================
+   TOP BAR
+   ========================= */
+#main {
+    border-radius: 10px;
+    padding: 5px 50px;
+    display: flex;
+    justify-content: center;
+    margin: 5px 0 0 350px;
+    height: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+#main:hover {
+    transform: scale(1.1);
 }
