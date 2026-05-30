@@ -2,12 +2,14 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
 import google.generativeai as genai
+from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
 
 # Create Flask app FIRST
 app = Flask(__name__)
+CORS(app)
 app.secret_key = "super_secret_key"
 
 # Gemini API setup
@@ -16,7 +18,7 @@ genai.configure(api_key=api_key)
 
 def get_response(user_input):
     try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.0-flash")
 
         response = model.generate_content(user_input)
 

@@ -50,7 +50,7 @@ function send() {
     btn.disabled = true;
 
     // fetch("/chat", {
-    fetch("/chat", {
+    fetch("https://your-render-backend.onrender.com/chat", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ message: m })
