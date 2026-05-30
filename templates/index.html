@@ -50,11 +50,15 @@ function send() {
     btn.disabled = true;
 
     // fetch("/chat", {
-    fetch("https://your-render-backend.onrender.com/chat", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ message: m })
+    fetch("/chat", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        message: m
     })
+})
     .then(r => r.json())
     .then(d => {
         document.getElementById("typing").remove();
