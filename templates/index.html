@@ -62,11 +62,12 @@ function send() {
         box.scrollTop = box.scrollHeight;
         btn.disabled = false;
     })
-    .catch(() => {
-        document.getElementById("typing").remove();
-        box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
-        btn.disabled = false;
-    });
+    .catch((err) => {
+    document.getElementById("typing").remove();
+    box.innerHTML += "<p><b>Bot:</b> " + err + "</p>";
+    console.error(err);
+    btn.disabled = false;
+});
 }
 
 //user defined function to handle enter key press

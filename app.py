@@ -17,15 +17,15 @@ genai.configure(api_key=api_key)
 
 def get_response(user_input):
     try:
-        model = genai.GenerativeModel("gemini-2.0-flash")
+        model = genai.GenerativeModel("gemini-1.5-flash")
 
         response = model.generate_content(user_input)
 
         return response.text
 
     except Exception as e:
+        print(e)
         return f"AI Error: {str(e)}"
-
     for model_id in models_to_try:
         try:
             response = client.models.generate_content(
