@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
-from google import genai
+import google.generativeai as genai
 
 # Load environment variables
 load_dotenv()
@@ -12,16 +12,18 @@ app.secret_key = "super_secret_key"
 
 # Gemini API setup
 api_key = os.getenv("GOOGLE_API_KEY")
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
 def get_response(user_input):
-    """
-    Try Gemini models one by one
-    """
-    models_to_try = [
-        "gemini-2.5-flash",
-        "gemini-1.5-flash"
-    ]
+    try:
+        model = genai.GenerativeModel("gemini-1.5-flash")
+
+        response = model.generate_content(user_input)
+
+        return response.text
+
+    except Exception as e:
+        return f"AI Error: {str(e)}"
 
     for model_id in models_to_try:
         try:
