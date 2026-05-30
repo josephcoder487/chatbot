@@ -2,14 +2,14 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
 import google.generativeai as genai
-from flask_cors import CORS
+# from flask_cors import CORS
 
 # Load environment variables
 load_dotenv()
 
 # Create Flask app FIRST
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
 app.secret_key = "super_secret_key"
 
 # Gemini API setup
