@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo">M A R V O - 3</div>
+            <button class="nav active">Home</button>
+            <button class="nav">Chats</button>
+            <button class="nav">History</button>
+            <button class="nav">Settings</button>
+            <div class="account">
+                <p class="account-title">Account</p>
+                <button class="login-btn">Log in</button>
+                <button class="google-btn" onclick="loginWithGoogle()">Sign in with Google</button>
+            </div>
+        </aside>
+        <hr class="v-line">
+<div class="chat">
+    <h2 style="color: aliceblue; text-align: center;">M  A  R  V  O</h2>
+    <div id="box"></div>
+    <br>
+    <input id="msg" placeholder="   What's on your mind..." onkeydown="handleKey(event)">
+    <button onclick="send()" id="ask">Ask.</button>
+    <button onclick="loginWithGoogle()" id="main">Sign in with Google</button>
+</div>
+
+<script>
+function send() {
+    let input = document.getElementById("msg");
+    let box = document.getElementById("box");
+    let btn = document.querySelector("button");
+
+    let m = input.value.trim();
+    if (m === "") return;
+
+    // show user message
+    box.innerHTML += "<p><b>You:</b> " + m + "</p>";
+    input.value = "";
+
+    // typing indicator
+    let typing = document.createElement("p");
+    typing.id = "typing";
+    typing.innerHTML = "<b>Marvo:</b> typing...";
+    box.appendChild(typing);
+
+    btn.disabled = true;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: m })
+    })
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById("typing").remove();
+        box.innerHTML += "<p><b>Marvo:</b> " + d.reply + "</p>";
+        box.scrollTop = box.scrollHeight;
+        btn.disabled = false;
+    })
+    .catch(() => {
+        document.getElementById("typing").remove();
+        box.innerHTML += "<p><b>Bot:</b> Error. Try again.</p>";
+        btn.disabled = false;
+    });
+}
+
+//user defined function to handle enter key press
+function handleKey(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        send();
+    }
+}
+
+function loginWithGoogle() {
+    // open auth page in same tab
+    window.location.href = "/auth";
+}
+</script>
+
+</body>
+</html>
