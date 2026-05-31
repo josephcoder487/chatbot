@@ -99,7 +99,9 @@ body::after {
     display: flex;
     flex-direction: column;
 }
-
+.chat-area{
+    display: block;
+}
 .logo {
     color: white;
     font-size: 22px;
@@ -241,4 +243,181 @@ body::after {
 
 #main:hover {
     transform: scale(1.1);
+}
+
+/* =========================
+   MENU TOGGLE
+   ========================= */
+
+.menu-toggle{
+    display: none;
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    body{
+        overflow-y: auto;
+    }
+
+    .app{
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+        width: 100%;
+        height: auto;
+        padding: 20px 10px;
+        align-items: center;
+    }
+    .chat-area{
+    position: absolute;
+}
+
+    .logo{
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .nav{
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        padding: 12px;
+        margin-bottom: 5px;
+    }
+
+    .account{
+        width: 100%;
+        margin-top: 20px;
+        border-top: none;
+        padding-top: 10px;
+    }
+
+    .login-btn,
+    .google-btn{
+        width: 100%;
+    }
+
+    /* HIDE LINE */
+    .v-line{
+        display: none;
+    }
+
+    /* CHAT AREA */
+    .chat{
+        width: 95%;
+        height: auto;
+        margin: 20px auto;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .chat h2{
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* CHAT BOX */
+    #box{
+        height: 350px;
+        font-size: 14px;
+    }
+
+    /* INPUT AREA */
+    #msg{
+        width: 100%;
+        margin-bottom: 10px;
+        height: 42px;
+        font-size: 14px;
+    }
+
+    #ask{
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 10px;
+        height: 42px;
+    }
+
+    #main{
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        height: 42px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    
+/* TOGGLE BUTTON */
+.menu-toggle{
+
+    display: block;
+
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 999;
+
+    background: rgba(255,255,255,0.2);
+
+    border: none;
+
+    color: white;
+
+    font-size: 28px;
+
+    padding: 8px 15px;
+
+    border-radius: 10px;
+
+    backdrop-filter: blur(10px);
+
+    cursor: pointer;
+}
+
+/* SIDEBAR MOBILE */
+.sidebar{
+
+    position: fixed;
+
+    top: 0;
+    left: -260px;
+
+    width: 250px;
+
+    height: 100vh;
+
+    background: rgba(120, 0, 40, 0.95);
+
+    z-index: 998;
+
+    transition: left 0.4s ease;
+
+    padding-top: 80px;
+}
+
+/* SHOW SIDEBAR */
+.sidebar.show{
+    left: 0;
+}
+
+/* CHAT FULL WIDTH */
+.chat{
+
+    width: 95%;
+
+    margin-top: 80px;
+}
+
+
+
 }
