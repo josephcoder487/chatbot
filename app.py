@@ -1,36 +1,31 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
-import google.generativeai as genai
+from openai import OpenAI
 
-
-# Load environment variables
-load_dotenv()
-
-# Create Flask app FIRST
-app = Flask(__name__)
-app.secret_key = "super_secret_key"
-
-# Gemini API setup
-api_key = os.getenv("GOOGLE_API_KEY")
-genai.configure(api_key=api_key)
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY")
+)
 
 def get_response(user_input):
+
     try:
 
-        model = genai.GenerativeModel(
-            "Gemini 2.0 Flash"
+        response = client.chat.completions.create(
+            model="gpt-4.1-mini",
+            messages=[
+                {
+                    "role": "user",
+                    "content": user_input
+                }
+            ]
         )
 
-        response = model.generate_content(
-            user_input
-        )
-
-        return response.text
+        return response.choices[0].message.content
 
     except Exception as e:
 
-        print("Gemini Error:", e)
+        print(e)
 
         return f"AI Error: {str(e)}"
 
