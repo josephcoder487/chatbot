@@ -1,33 +1,35 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify, session
-from openai import OpenAI
+from groq import Groq
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY")
+load_dotenv()
+
+app = Flask(__name__)
+
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
 )
 
 def get_response(user_input):
 
     try:
 
-        response = client.chat.completions.create(
-            model="gpt-4.1-mini",
-            messages=[
-                {
-                    "role": "user",
-                    "content": user_input
-                }
-            ]
-        )
+        chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": user_input
+        }
+    ],
+    model="llama-3.1-8b-instant"
+)
 
-        return response.choices[0].message.content
+        return chat_completion.choices[0].message.content
 
     except Exception as e:
 
-        print(e)
-
-        return f"AI Error: {str(e)}"
+        return str(e)
 
 @app.route("/")
 def home():
