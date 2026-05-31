@@ -19,7 +19,7 @@ def get_response(user_input):
     try:
 
         model = genai.GenerativeModel(
-            "gemini-1.5-flash"
+            "Gemini 2.0 Flash"
         )
 
         response = model.generate_content(
